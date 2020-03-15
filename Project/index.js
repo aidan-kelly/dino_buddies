@@ -32,7 +32,7 @@ async function main(){
   return client;
 }
 
-
+// these functions work asynconicly so you have to wait for them to finish before using them.
 async function getGroups(client){
   let results = await client.db('discord-clone').collection('group').find().toArray()
   return results;

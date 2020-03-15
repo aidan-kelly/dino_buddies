@@ -24,9 +24,10 @@
 
     <script>
         const group_container = document.getElementById('groups');
-    
+        // you have to stringify initally then parse. IDK why.
         let groups = '<%- JSON.stringify(data.groups) %>';
         groups = JSON.parse(groups)
+        // prints the groups name to the page as a list
        groups.forEach(content => { 
             console.log(content)
             let element = document.createElement('li');
