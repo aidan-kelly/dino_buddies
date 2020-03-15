@@ -9,10 +9,6 @@
 </head>
 
 <body>
-
-
-
-
     <div class="container">
         
         <h1> Dino Buddies </h1>
@@ -20,6 +16,14 @@
 
             </div>
         </h1>
+        
+        <form action="/new_group" method="post">
+            <div class="form-group">
+                <label for="new_Group">Add another group: </label>
+                <input id="group_name" type="text" name="name" value="">
+                <input type="submit" value="OK">
+            </div>
+        </form>
     </div>
 
     <script>
@@ -30,9 +34,18 @@
         // prints the groups name to the page as a list
        groups.forEach(content => { 
             console.log(content)
-            let element = document.createElement('li');
+            let element = document.createElement('ul');
+            let list = document.createElement('li');
             let text = document.createTextNode(content.name);
             element.append(text);
+            for(let i = 0; i < content.rooms.length; i ++){
+                let subElement = document.createElement('ul');
+                let sublist = document.createElement('li');
+                subElement.appendChild(sublist);
+                let subtext = document.createTextNode(content.rooms[i]);
+                sublist.appendChild(subtext);
+                element.appendChild(subElement)
+            }
             group_container.append(element)
         });
         
