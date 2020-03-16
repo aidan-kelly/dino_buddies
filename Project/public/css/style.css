@@ -1,0 +1,62 @@
+.container{
+	height: 100vh;
+}
+.grid-container {
+	height: 100vh;
+	display: grid;
+	grid-template-columns: 0.2fr 0.2fr 1fr;
+	grid-template-rows: 1fr 0.1fr 0.2fr;
+	grid-template-areas: "groups chatrooms message-box" "add-group chatrooms message-box" ". add-chatrooms message-box";
+}
+  
+
+#group-form-name{
+	width: 100%;
+}
+
+.message-grid-container {
+	height: 100%;
+	display: grid;
+	grid-template-columns: 1fr 0.2fr;
+	grid-template-rows: 1fr 0.1fr;
+	grid-template-areas: "messages users" "message message";
+  }
+  
+.message { 
+	grid-area: message; 
+	background: darksalmon;
+}
+
+.messages { 
+	grid-area: messages; 
+	background: darkred;
+}
+
+.users { 
+	grid-area: users; 
+	background-color: darkkhaki;
+}
+
+#groups { 
+	padding-left: 10%;
+	padding-top: 5%;
+	grid-area: groups; 
+	background: darkgray;
+}
+
+#add-group { grid-area: add-group; }
+  
+#message-box { 
+	  grid-area: message-box; 
+	  background: white;
+	  border: 2px solid darkgreen;
+}
+  
+#chatrooms { 
+	padding-left: 5%;
+	padding-top: 5%;
+	grid-area: chatrooms; 
+	background: gray;
+}
+
+#add-chatrooms { grid-area: add-chatrooms; }

@@ -3,53 +3,63 @@
 <head>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-    <script type="text/javascript" src="/script/script.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="../socket.io/socket.io.js"></script>
+    <link rel="stylesheet" type="text/css" href="/css/style.css" />
+    <link rel="stylesheet" type="text/css" href="/css/scrollBarStyle.css" />
 
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    
+    
+    <script type="text/javascript" src="/script/script.js"></script>
+    <script>
+        // allows data to be passed into script sheet
+    // you have to stringify initally then parse. IDK why.
+
+        //groups = JSON.parse(groups);
+    
+    </script>
 
 </head>
 
 <body>
     <div class="container">
-        
-        <h1> Dino Buddies </h1>
+
+        <div class='grid-container'>
             <div id='groups'>
+                
+            </div>
+            <div id='add-group'>
+                <form id='new-group-form' action="/new_group" method="post">
+                    <div class="form-group">
+                        <input id="group-form-name" type="text" name="name" value="">
+                    </div>
+                </form>
+            </div>
+            <div id="message-box">
+                <div class="message-grid-container">
+                    <div class="message"></div>
+                    <div class="messages"></div>
+                    <div class="users"></div>
+                  </div>
 
             </div>
-        </h1>
-        
-        <form action="/new_group" method="post">
-            <div class="form-group">
-                <label for="new_Group">Add another group: </label>
-                <input id="group_name" type="text" name="name" value="">
-                <input type="submit" value="OK">
+            <div id='chatrooms'>
+
             </div>
-        </form>
+        </div>
+
+        
+
+    
+
+        </div>
     </div>
 
-    <script>
-        const group_container = document.getElementById('groups');
-        // you have to stringify initally then parse. IDK why.
-        let groups = '<%- JSON.stringify(data.groups) %>';
-        groups = JSON.parse(groups)
-        // prints the groups name to the page as a list
-       groups.forEach(content => { 
-            console.log(content)
-            let element = document.createElement('ul');
-            let list = document.createElement('li');
-            let text = document.createTextNode(content.name);
-            element.append(text);
-            for(let i = 0; i < content.rooms.length; i ++){
-                let subElement = document.createElement('ul');
-                let sublist = document.createElement('li');
-                subElement.appendChild(sublist);
-                let subtext = document.createTextNode(content.rooms[i]);
-                sublist.appendChild(subtext);
-                element.appendChild(subElement)
-            }
-            group_container.append(element)
-        });
-        
-    </script>
+    
+
     
 </body>
 </html>
