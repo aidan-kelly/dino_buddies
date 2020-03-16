@@ -38,7 +38,7 @@ window.onload = function (){
     function loadGroups(groups){
         group_container.innerHTML = '';
         groups.forEach(content => { 
-            let element = document.createElement('h5');
+            let element = document.createElement('p');
             element.innerHTML = content.name;
             element.onclick = function(){
                 if(selectedGroup != null){
@@ -65,7 +65,7 @@ window.onload = function (){
     function loadChatrooms(group, rooms){
         room_container.innerHTML = '';
         for(let i = 0; i < rooms.length; i++){
-            let element = document.createElement('h5')
+            let element = document.createElement('p')
             element.appendChild(document.createTextNode(rooms[i]));
             room_container.appendChild(element)
             element.onclick = function(){
@@ -74,9 +74,15 @@ window.onload = function (){
                 }
                 selectedRoom = element;
                 element.style = 'color:white'    
+                getMessages(group, selectedRoom.innerHTML)
             }
         }
         room_container.appendChild(createRoomForm(group));
+    }
+
+    function getMessages(group, room){
+        console.log('requesting messages');
+        socket.emit('request-messages', {group: group, room: room})
     }
 
 

@@ -33,6 +33,11 @@ async function onConnect(socket){
     io.emit('reload-groups', data);
   })
 
+  socket.on('request-messages', data =>{
+    console.log('data: ', data);
+    getMessages(data.group, data.room);
+  })
+
 
 }
 
@@ -101,5 +106,10 @@ async function makeRoom(client, group_name, room_name){
     { upsert : true })
 }
 
+
+async function getMessages(group, room){
+  let messages = await client.db('discord-clone').collection('messages').find({group: group, room:room}).toArray();
+  console.log(messages);
+}
 
 http.listen(process.env.PORT || 3000 );
