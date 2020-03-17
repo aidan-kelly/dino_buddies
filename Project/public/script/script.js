@@ -68,9 +68,11 @@ window.onload = function (){
             element.onclick = function(){
                 if(selectedGroup != null){
                     selectedGroup.style = 'color:black';
+                    socket.emit('leave', '/'+selectedGroup.innerHTML+'-'+ selectedRoom.innerHTML);
+                    selectedGroup = null;
                 }
-                selectedGroup = null;
                 selectedGroup = element;
+                selectedRoom = null;
                 
                 console.log(element)
                 groupSelect(content.name)
@@ -98,13 +100,15 @@ window.onload = function (){
             room_container.appendChild(element)
             element.onclick = function(){
                 if(selectedRoom != null){
-                    console.log('leaving', '/'+group+'-'+ selectedRoom.innerHTML)
-                    socket.emit('leave', '/'+group+'-'+ selectedRoom.innerHTML);
+                    console.log('leaving', '/'+selectedGroup.innerHTML+'-'+ selectedRoom.innerHTML)
+                    socket.emit('leave', '/'+selectedGroup.innerHTML+'-'+ selectedRoom.innerHTML);
                     selectedRoom.style = 'color:black';
+                    selectedRoom = null;
                 }
+                
                 selectedRoom = element;
-                element.style = 'color:white'    
                 getMessages(selectedGroup.innerHTML, selectedRoom.innerHTML)
+                element.style = 'color:white'    
                 //console.log('/'+group+'-'+rooms[i]);
                 socket.emit('join', '/'+group+'-'+rooms[i])
             }

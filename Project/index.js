@@ -45,7 +45,7 @@ async function onConnect(socket){
 
 
   socket.on('join', data =>{
-    //console.log('user requested to join: ' , data)
+    console.log('user requested to join: ' , data)
     socket.join(data);
     socket.emit('room-accepted', data);
     socket.emit('messages', 'welcome to the chatroom ' + data)
