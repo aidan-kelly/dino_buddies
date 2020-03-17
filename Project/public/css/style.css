@@ -2,6 +2,13 @@ p{margin: 0;}
 .container{
 	height: 100vh;
 }
+
+#message-input{
+	width: 83.4%;
+}
+#send-button{
+	width: 15%
+}
 .grid-container {
 	height: 100vh;
 	display: grid;

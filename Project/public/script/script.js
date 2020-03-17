@@ -3,6 +3,8 @@ window.onload = function (){
     const room_container = document.getElementById('chatrooms')
     const new_group_form = document.getElementById('new-group-form')
     const new_group_form_input = document.getElementById("group-form-name")
+    const message_form = document.getElementById('send-container')
+    const message_form_input = document.getElementById('message-input');
     let groupList;
     let selectedGroup = null;
     let selectedRoom = null;
@@ -23,13 +25,23 @@ window.onload = function (){
         group_container.innerHTML = ''
         let groups_content = e.groups;
         loadGroups(groups_content)
-        
+    })
+
+    socket.on('messages', messages =>{
+        console.log(messages);
     })
     
     new_group_form.addEventListener('submit', function(e){
         e.preventDefault();
         socket.emit('create-group', new_group_form_input.value);
     });
+
+    message_form.addEventListener('submit', function(e){
+        e.preventDefault();
+        console.log(selectedGroup.innerHTML, selectedRoom.innerHTML, message_form_input.value);
+        socket.emit('user-message', {group: selectedGroup.innerHTML, room: selectedRoom.innerHTML, message: message_form_input.value})
+        message_form_input.value = '';
+    })
 
 
     loadPage();
@@ -84,6 +96,8 @@ window.onload = function (){
         console.log('requesting messages');
         socket.emit('request-messages', {group: group, room: room})
     }
+
+
 
 
     function createRoomForm(group){

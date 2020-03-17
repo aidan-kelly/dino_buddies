@@ -33,9 +33,15 @@ async function onConnect(socket){
     io.emit('reload-groups', data);
   })
 
-  socket.on('request-messages', data =>{
+  socket.on('request-messages', async function(data){
     console.log('data: ', data);
-    getMessages(data.group, data.room);
+    let messages = await getMessages(data.group, data.room);
+    socket.emit('messages', messages);
+  })
+
+  socket.on('user-message', async function(data){
+    //console.log('message data: ', data);
+    saveMessage(client, data.group, data.room, data.message);
   })
 
 
@@ -97,6 +103,12 @@ async function makeGroups(client, group_name){
     )
 }
 
+async function saveMessage(client, group, room, message){
+  console.log(group, room, message);
+  let data = {group: group, room: room, message: message}
+  await client.db('discord-clone').collection('messages').insertOne(data);
+}
+
 async function makeRoom(client, group_name, room_name){
   await client.db('discord-clone').collection('group').updateOne(
     // condition that this doesn't exist
@@ -109,7 +121,8 @@ async function makeRoom(client, group_name, room_name){
 
 async function getMessages(group, room){
   let messages = await client.db('discord-clone').collection('messages').find({group: group, room:room}).toArray();
-  console.log(messages);
+  //console.log('message: ', messages);
+  return messages;
 }
 
 http.listen(process.env.PORT || 3000 );
