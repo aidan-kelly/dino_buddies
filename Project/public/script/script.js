@@ -8,10 +8,18 @@ window.onload = function (){
     let groupList;
     let selectedGroup = null;
     let selectedRoom = null;
+    let id = null;
+    let socket = io();
+    let roomSocket = null;
 
-    const socket = io();
+
+    var ID = function () {
+        return Math.random().toString(36).substr(2, 9);
+    };
 
     function loadPage(){
+        id = ID();
+        console.log(id);
         socket.emit('load-page')
     }
 
@@ -25,6 +33,11 @@ window.onload = function (){
         group_container.innerHTML = ''
         let groups_content = e.groups;
         loadGroups(groups_content)
+    })
+
+    socket.on('room-accepted', e =>{
+        //console.log('accepted to room')
+        roomSocket = io(e);
     })
 
     socket.on('messages', messages =>{
@@ -56,10 +69,13 @@ window.onload = function (){
                 if(selectedGroup != null){
                     selectedGroup.style = 'color:black';
                 }
+                selectedGroup = null;
+                selectedGroup = element;
+                
+                console.log(element)
                 groupSelect(content.name)
                 //deselectGroups();
                 element.style = 'color:white'
-                selectedGroup = element;
             }
             group_container.appendChild(element);
         });
@@ -82,11 +98,15 @@ window.onload = function (){
             room_container.appendChild(element)
             element.onclick = function(){
                 if(selectedRoom != null){
+                    console.log('leaving', '/'+group+'-'+ selectedRoom.innerHTML)
+                    socket.emit('leave', '/'+group+'-'+ selectedRoom.innerHTML);
                     selectedRoom.style = 'color:black';
                 }
                 selectedRoom = element;
                 element.style = 'color:white'    
-                getMessages(group, selectedRoom.innerHTML)
+                getMessages(selectedGroup.innerHTML, selectedRoom.innerHTML)
+                //console.log('/'+group+'-'+rooms[i]);
+                socket.emit('join', '/'+group+'-'+rooms[i])
             }
         }
         room_container.appendChild(createRoomForm(group));
@@ -95,6 +115,10 @@ window.onload = function (){
     function getMessages(group, room){
         console.log('requesting messages');
         socket.emit('request-messages', {group: group, room: room})
+    }
+
+    function chatroomSelected(element){
+
     }
 
 
