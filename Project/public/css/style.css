@@ -1,5 +1,7 @@
 p{margin: 0;}
 .container{
+    margin:0px;
+    width:100%;
 	height: 100vh;
 }
 
@@ -14,11 +16,13 @@ p{margin: 0;}
 	border-radius: 5px;
 }
 .grid-container {
-	height: 100vh;
+	height: 100%;
+    width:100%;
 	display: grid;
-	grid-template-columns: 0.2fr 0.2fr 1fr;
-	grid-template-rows: 1fr 0.1fr 0.2fr;
-	grid-template-areas: "groups chatrooms message-box" "add-group chatrooms message-box" ". add-chatrooms message-box";
+	grid-template-columns: 0.2fr 0.2fr 1fr 0.2fr ;
+	grid-template-rows: 0.1fr 1fr 0.1fr;
+
+    grid-template-areas: "logo currentserver currentchannel users" "groups chatrooms messages users" "add-group chatrooms message users";
 }
 
 
@@ -28,37 +32,47 @@ p{margin: 0;}
 	border-radius: 5px;
 }
 
-.message-grid-container {
-	height: 100%;
-	display: grid;
-	grid-template-columns: 1fr 0.2fr;
-	grid-template-rows: 1fr 0.1fr;
-	grid-template-areas: "messages users" "message message";
-  }
-
 .message {
 	grid-area: message;
 	background: darksalmon;
 }
 
 .messages {
+    color: white;
 	grid-area: messages;
-	background: darkred;
+	background: #36393f;
 }
 
 .users {
+    color: white;
 	grid-area: users;
-	background-color: darkkhaki;
+	background-color: #2f3136;
 }
 
 #groups {
 	padding-left: 10%;
 	padding-top: 5%;
 	grid-area: groups;
-	background: darkgray;
+    color: #FFFFFF;
+	background: #202225;
 }
 
 #add-group { grid-area: add-group; }
+#logo { 
+    color: #FFFFFF;
+    background: #202225;
+    grid-area: logo;
+}
+#currentserver { 
+    grid-area: currentserver;
+    color: #FFFFFF;
+    background: #2f3136;
+}
+#currentchannel {
+    color: #FFFFFF;
+    background: #36393f;
+    grid-area: currentchannel;
+}
 
 #message-box {
 	  grid-area: message-box;
@@ -70,7 +84,7 @@ p{margin: 0;}
 	padding-left: 5%;
 	padding-top: 5%;
 	grid-area: chatrooms;
-	background: gray;
+	background: #2f3136;
 }
 
 #add-chatrooms { grid-area: add-chatrooms; }
