@@ -6,45 +6,12 @@ app.use(express.urlencoded())
 const mongo = require('mongodb')
 const MongoClient = require('mongodb').MongoClient;
 const bodyParser = require('body-parser');
-
-// For auth
-const flash = require('connect-flash');
-const session = require('express-session');
-const cookieParser = require('cookie-parser');
-const passport = require('passport');
-
-app.use(express.static('public'));
-app.use(bodyParser());
-
-// Instantiate flash - used for login error
-app.use(flash());
-
-// Express session
-app.use(require('express-session')({
-  secret: 'keyboard cat',
-  resave: true,
-  saveUninitialized: true
-}));
-app.use(passport.initialize());
-app.use(passport.session());
-
-app.set('view engine', 'ejs');
+app.use(express.static('public'))
+app.use(bodyParser())
+app.set('view engine', 'ejs')
 let client;
 let nsps = [];
 //let groups = getGroups(client);
-
-//Dataset
-// Move to mongodb once working
-let users = [
-	{name: "John", username: "john", password: "password"},
-	{name: "Jenny", username: "jenny", password: "password"},
-	{name: "Rose", username: "rose", password: "password"},
-	{name: "Peter", username: "peter", password: "password"},
-	{name: "Ken", username: "ken", password: "password"}
-];
-
-let LocalStrategy = require('passport-local').Strategy;
-
 
 io.on('connect', onConnect);
 
@@ -113,63 +80,9 @@ async function onConnect(socket){
   })
 }
 
-//Authentication strategy. This handles any authentication logic - currently local
-// Idea: implement this localstrategy to use mongodb database for login
-// https://www.geeksforgeeks.org/nodejs-authentication-using-passportjs-and-passport-local-mongoose/
-passport.use(new LocalStrategy(
-	function(username, password, done) 
-	{
-		//Find and return the first instance of user object that match the username and password specified from the login form.
-		let user = users.find((user) => {
-			return (user.username === username && user.password === password);
-		});
-		
-		if(user)
-		{
-			return done(null, user);
-		}
-		else
-		{
-			return done(null, false, { message: 'Incorrect username or password.' });
-		}
-	}
-));
-
-
-//On success authentication, this handles the serialization of the user data into a session storage
-passport.serializeUser(function(user, done) {
-  done(null, user);
+app.get('/', async function(req, res){
+  res.render('index');
 });
-
-//On success authentication, this handles the deserialization of the user data from a session storage
-passport.deserializeUser(function(user, done) {
-  done(null, user);
-});
-
-//Middleware to protect routes from users that are not logged on
-function protectMiddleware(req, res, next)
-{
-	//if no user is logged-in, redirect to login page
-	if(!req.user)
-	{
-		return res.redirect('/login');
-	}
-	return next();
-}
-
-app.get('/', protectMiddleware, async function(req, res){
-  res.render('index', {user: req.user});
-});
-
-app.get('/login', function(req, res) {
-    res.render('login', {message: req.flash('error')});
-});
-
-app.post('/login', 
-  passport.authenticate('local', { successRedirect: '/',
-                          failureRedirect: '/login',
-                          failureFlash: true})
-);
 
 app.post('/', async function(req, res){
   console.log(req.body)
@@ -248,4 +161,3 @@ async function getMessages(group, room){
 }
 
 http.listen(process.env.PORT || 3000 );
-console.log("Listening on Port 3000");
