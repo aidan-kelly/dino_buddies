@@ -5,9 +5,13 @@ p{margin: 0;}
 
 #message-input{
 	width: 83.4%;
+	border: solid 1px black;
+	border-radius: 5px;
 }
 #send-button{
-	width: 15%
+	width: 15%;
+	border: solid 1px black;
+	border-radius: 5px;
 }
 .grid-container {
 	height: 100vh;
@@ -16,10 +20,12 @@ p{margin: 0;}
 	grid-template-rows: 1fr 0.1fr 0.2fr;
 	grid-template-areas: "groups chatrooms message-box" "add-group chatrooms message-box" ". add-chatrooms message-box";
 }
-  
+
 
 #group-form-name{
 	width: 100%;
+	border: solid 1px black;
+	border-radius: 5px;
 }
 
 .message-grid-container {
@@ -29,41 +35,41 @@ p{margin: 0;}
 	grid-template-rows: 1fr 0.1fr;
 	grid-template-areas: "messages users" "message message";
   }
-  
-.message { 
-	grid-area: message; 
+
+.message {
+	grid-area: message;
 	background: darksalmon;
 }
 
-.messages { 
-	grid-area: messages; 
+.messages {
+	grid-area: messages;
 	background: darkred;
 }
 
-.users { 
-	grid-area: users; 
+.users {
+	grid-area: users;
 	background-color: darkkhaki;
 }
 
-#groups { 
+#groups {
 	padding-left: 10%;
 	padding-top: 5%;
-	grid-area: groups; 
+	grid-area: groups;
 	background: darkgray;
 }
 
 #add-group { grid-area: add-group; }
-  
-#message-box { 
-	  grid-area: message-box; 
+
+#message-box {
+	  grid-area: message-box;
 	  background: white;
 	  border: 2px solid darkgreen;
 }
-  
-#chatrooms { 
+
+#chatrooms {
 	padding-left: 5%;
 	padding-top: 5%;
-	grid-area: chatrooms; 
+	grid-area: chatrooms;
 	background: gray;
 }
 
